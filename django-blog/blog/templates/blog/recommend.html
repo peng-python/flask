@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}
+文章详情
+{% endblock title %}
+{% block content %}
+  <div class="content-wrap">
+    <div class="content">
+      <header class="article-header">
+        <h1 class="article-title"><a href="">{{ recommend.title }}</a></h1>
+        <div class="article-meta">
+            <span class="item article-meta-time">
+                <time class="time" data-toggle="tooltip" data-placement="bottom" title="时间：2016-1-4 10:29:39">
+                    <i class="glyphicon glyphicon-time"></i> {{ recommend.add_time }}</time>
+            </span>
+            <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" title="来源：今日推荐">
+                <i class="glyphicon glyphicon-globe"></i> 今日推荐</span>
+            <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" title="栏目：今日推荐">
+                <i class="glyphicon glyphicon-list"></i> <a href="#" title="">今日推荐</a></span>
+        </div>
+      </header>
+
+      <article class="article-content">
+          <p class="note">{% autoescape off %}{{ recommend.recommend }}{% endautoescape %} </p>
+
+        <p class="article-copyright hidden-xs">未经允许不得转载：<a href="">个人博客</a> » <a href="#">{{ recommend.title }}</a></p>
+      </article>
+
+      <div class="article-tags">标签：<a href="" rel="tag">今日推荐</a></div>
+
+      <div class="title" id="comment">
+        <h3>评论 <small>抢沙发</small></h3>
+      </div>
+      <div id="respond">
+        <div class="comment-signarea">
+          <h3 class="text-muted">当前文章禁止评论</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endblock content %}

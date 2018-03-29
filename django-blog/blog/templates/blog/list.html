@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}
+栏目文章
+{% endblock title %}
+{% block content %}
+  <div class="content-wrap">
+    <div class="content">
+      <div class="title">
+        <h3>{{ column.name }}</h3>
+      </div>
+        {% for article in articles.object_list %}
+      <article class="excerpt excerpt-1"><a class="focus" href="{% url 'article:article_detail' article.id %}" title=""><img class="thumb" data-original="images/excerpt.jpg" src="{{ MEDIA_URL }}{{ article.title_image }}" alt=""></a>
+        <header><a class="cat" href="#">{{ column.name }}<i></i></a>
+          <h2><a href="{% url 'article:article_detail' article.id %}" title="">{{ article.title }}</a></h2>
+        </header>
+        <p class="meta">
+          <time class="time"><i class="glyphicon glyphicon-time"></i> {{ article.add_time }}</time>
+          <span class="views"><i class="glyphicon glyphicon-eye-open"></i> 共{{ article.click_nums }}人围观</span> <a class="comment" href="article.html#comment"><i class="glyphicon glyphicon-comment"></i> 0个不明物体</a></p>
+        <p class="note">{% autoescape off %}{{ article.content | truncatechars_html:"100" }}{% endautoescape %}</p>
+      </article>
+        {% endfor %}
+
+        <ul class="quotes">
+
+            {% if articles.has_previous %}
+                <a href="?{{ articles.previous_page_number.querystring }}">上一页</a>
+            {% endif %}
+
+            {% for page in articles.pages %}
+                {% if page %}
+                    {% ifequal page articles.number %}
+                        <a href="?{{ page.querystring }}">{{ page }}</a>
+                    {% else %}
+                        <a class="page" href="?{{ page.querystring }}">{{ page }}</a>
+                    {% endifequal %}
+                {% else %}
+                    <a href="">...</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if articles.has_next %}
+                <a href="?{{ articles.next_page_number.querystring }}">下一页</a>
+            {% endif %}
+        </ul>
+{#      <nav class="pagination" style="display: none;">#}
+{#        <ul>#}
+{#          <li class="prev-page"></li>#}
+{#          <li class="active"><span>1</span></li>#}
+{#          <li><a href="?page=2">2</a></li>#}
+{#          <li class="next-page"><a href="?page=2">下一页</a></li>#}
+{#          <li><span>共 2 页</span></li>#}
+{#        </ul>#}
+{#      </nav>#}
+{#    <ul class="quotes">#}
+{##}
+{#                {% if articles.has_previous %}#}
+{#                    <a href="?{{ articles.previous_page_number.querystring }}">上一页</a>#}
+{#                {% endif %}#}
+{##}
+{#                {% for page in articles.pages %}#}
+{#                    {% if page %}#}
+{#                        {% ifequal page articles.number %}#}
+{#                            <a href="?{{ page.querystring }}" class="active">{{ page }}</a>#}
+{#                        {% else %}#}
+{#                            <a class="page" href="?{{ page.querystring }}">{{ page }}</a>#}
+{#                        {% endifequal %}#}
+{#                    {% else %}#}
+{#                        <a href="">...</a>#}
+{#                    {% endif %}#}
+{#                {% endfor %}#}
+{##}
+{#                {% if articles.has_next %}#}
+{#                    <a href="?{{ articles.next_page_number.querystring }}">下一页</a>#}
+{#                {% endif %}#}
+{##}
+{#            </ul>#}
+
+
+    </div>
+  </div>
+{% endblock content %}

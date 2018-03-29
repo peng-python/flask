@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}
+文章详情
+{% endblock title %}
+{% block content %}
+  <div class="content-wrap">
+    <div class="content">
+      <header class="article-header">
+        <h1 class="article-title"><a href="#">{{ article.title }}</a></h1>
+        <div class="article-meta">
+            <span class="item article-meta-time">
+                <time class="time" data-toggle="tooltip" data-placement="bottom" title="时间：{{ article.add_time }}">
+                    <i class="glyphicon glyphicon-time"></i> {{ article.add_time }}</time>
+            </span>
+            <span class="item article-meta-source" data-toggle="tooltip" data-placement="bottom" title="来源：{{ article.source }}">
+                <i class="glyphicon glyphicon-globe"></i> {{ article.source }}</span>
+            <span class="item article-meta-category" data-toggle="tooltip" data-placement="bottom" title="栏目：{{ article.column }}">
+                <i class="glyphicon glyphicon-list"></i> <a href="program" title="">{{ article.column }}</a></span>
+            <span class="item article-meta-views" data-toggle="tooltip" data-placement="bottom" title="查看：{{ article.click_nums }}">
+                <i class="glyphicon glyphicon-eye-open"></i> 共{{ article.click_nums }}人围观</span>
+            <span class="item article-meta-comment" data-toggle="tooltip" data-placement="bottom" title="评论：0">
+                <i class="glyphicon glyphicon-comment"></i> 0个不明物体</span>
+        </div>
+      </header>
+
+      <article class="article-content">
+          <p class="note">
+              {% autoescape off %}{{ article.content }}{% endautoescape %}
+          </p>
+
+        <p class="article-copyright hidden-xs">未经允许不得转载：<a href="">个人博客</a> » <a href="#">{{ article.title }}</a></p>
+      </article>
+
+      <div class="article-tags">标签：<a href="" rel="tag">{{ article.label }}</a></div>
+      <div class="relates">
+        <div class="title">
+          <h3>相关推荐</h3>
+        </div>
+        <ul>
+            {% for relevant in relevant_article %}
+          <li><a href="{% url 'article:article_detail' relevant.id %}">{{ relevant.title }}</a></li>
+            {% endfor %}
+        </ul>
+      </div>
+      <div class="title" id="comment">
+        <h3>评论 <small>抢沙发</small></h3>
+      </div>
+      <!--<div id="respond">
+        <div class="comment-signarea">
+          <h3 class="text-muted">评论前必须登录！</h3>
+          <p> <a href="javascript:;" class="btn btn-primary login" rel="nofollow">立即登录</a> &nbsp; <a href="javascript:;" class="btn btn-default register" rel="nofollow">注册</a> </p>
+          <h3 class="text-muted">当前文章禁止评论</h3>
+        </div>
+      </div>-->
+      <div id="respond">
+        <form action="" method="post" id="comment-form">
+          <div class="comment">
+            <div class="comment-title"><img class="avatar" src="images/icon/icon.png" alt="" /></div>
+            <div class="comment-box">
+              <textarea placeholder="您的评论可以一针见血" name="comment" id="comment-textarea" cols="100%" rows="3" tabindex="1" ></textarea>
+              <div class="comment-ctrl"> <span class="emotion"><img src="images/face/5.png" width="20" height="20" alt="" />表情</span>
+                <div class="comment-prompt"> <i class="fa fa-spin fa-circle-o-notch"></i> <span class="comment-prompt-text"></span> </div>
+                <input type="hidden" value="1" class="articleid" />
+                <button type="submit" name="comment-submit" id="comment-submit" tabindex="5" articleid="1">评论</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="postcomments">
+        <ol class="commentlist">
+          <li class="comment-content"><span class="comment-f">#1</span>
+            <div class="comment-avatar"><img class="avatar" src="images/icon/icon.png" alt="" /></div>
+            <div class="comment-main">
+              <p>来自<span class="address">河南郑州</span>的用户<span class="time">(2016-01-06)</span><br />
+                这是匿名评论的内容这是匿名评论的内容，这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容。</p>
+            </div>
+          </li>
+        </ol>
+        
+        <div class="quotes"><span class="disabled">首页</span><span class="disabled">上一页</span><a class="current">1</a><a href="">2</a><span class="disabled">下一页</span><span class="disabled">尾页</span></div>
+      </div>
+    </div>
+  </div>
+    {% endblock content %}
+
+{% block js %}
+<script src="/static/blog/js/jquery.qqFace.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.emotion').qqFace({
+		id : 'facebox', 
+		assign:'comment-textarea', 
+		path:'/Home/images/arclist/'	//表情存放的路径
+	});
+ });   
+</script>
+{% endblock js %}
